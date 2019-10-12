@@ -1,8 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { UserRepository } from './user.repository';
+import { UserRepository } from './user/user.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
-import { User } from './user.entity';
+import { User } from './user/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { IJwtPayload } from './jwt/jwt-payload.interface';
 
@@ -30,7 +30,6 @@ export class AuthService {
     }
 
     const payload: IJwtPayload = { username };
-
     const accessToken = await this.jwtService.sign(payload);
 
     return { accessToken };
