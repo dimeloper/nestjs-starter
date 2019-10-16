@@ -67,7 +67,7 @@ export class TasksController {
     return this.taskService.createTask(createTaskDto, user);
   }
 
-  @Patch('/:id')
+  @Patch('/:id/status')
   updateTaskStatus(
     @Param('id', ParseIntPipe) id: number,
     @Body('status', TaskStatusValidationPipe) status: TaskStatus,

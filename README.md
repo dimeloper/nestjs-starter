@@ -47,6 +47,10 @@ $ nest g controller <controller-name> --no-spec
 $ nest g service <service-name> --no-spec
 ```
 
+## Deploy to production
+We can use AWS Elastic Beanstalk to deploy the API into production. Prerequisites: JWT_SECRET=<yourSecret> and TYPEORM_SYNC=<true> environment variables as well as DB credentials. 
+After first run, remember to set the TYPEORM_SYNC variable back to false.
+
 ## Recommended NestJS course
 [NestJS Zero to Hero - Modern Typescript Back-end Development](https://www.udemy.com/share/101ZIcA0AfclxWRXg=/)
 

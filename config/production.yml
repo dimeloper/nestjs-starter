@@ -1,2 +1,5 @@
 db:
   synchronize: false
+
+server:
+  origin: 'https://dimeloper-task-management-frontend.s3.eu-central-1.amazonaws.com'
