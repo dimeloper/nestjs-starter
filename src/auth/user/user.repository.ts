@@ -9,17 +9,17 @@ import * as bcrypt from 'bcryptjs';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  async signUp(authCredentialsDto: AuthCredentialsDto) {
+  async signUp(authCredentialsDto: AuthCredentialsDto): Promise<User> {
     const { username, password } = authCredentialsDto;
 
-    const user = new User();
+    const user = this.create();
     user.username = username;
     const salt = await bcrypt.genSalt();
     user.password = await this.hashPassword(password, salt);
 
     try {
-      await user.save();
-      return user;
+      const newUser = await user.save();
+      return newUser;
     } catch (error) {
       // duplicate username error code
       if (error.code === '23505') {
