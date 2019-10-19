@@ -2,4 +2,4 @@ db:
   synchronize: false
 
 server:
-  origin: 'https://dimeloper-task-management-frontend.s3.eu-central-1.amazonaws.com'
+  origin: 'http://dimeloper-nest-task-management.s3-website.eu-central-1.amazonaws.com'
