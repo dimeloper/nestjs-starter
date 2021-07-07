@@ -24,9 +24,7 @@ export class TaskRepository extends Repository<Task> {
       await task.save();
     } catch (error) {
       this.logger.error(
-        `Failed to create task for User ${
-          user.username
-        }. Data: ${JSON.stringify(createTaskDto)}.`,
+        `Failed to create task for User ${user.username}. Data: ${JSON.stringify(createTaskDto)}.`,
         error.stack,
       );
       throw new InternalServerErrorException();
@@ -44,10 +42,9 @@ export class TaskRepository extends Repository<Task> {
     query.where('task.userId = :userId', { userId: user.id });
 
     if (search) {
-      query.andWhere(
-        '(task.title LIKE :search OR task.description LIKE :search)',
-        { search: `%${search}%` },
-      );
+      query.andWhere('(task.title LIKE :search OR task.description LIKE :search)', {
+        search: `%${search}%`,
+      });
     }
 
     if (status) {
@@ -59,9 +56,9 @@ export class TaskRepository extends Repository<Task> {
       return tasks;
     } catch (error) {
       this.logger.error(
-        `Failed to retrieve tasks for User ${
-          user.username
-        }. Filters: ${JSON.stringify(filterDto)}.`,
+        `Failed to retrieve tasks for User ${user.username}. Filters: ${JSON.stringify(
+          filterDto,
+        )}.`,
         error.stack,
       );
       throw new InternalServerErrorException();

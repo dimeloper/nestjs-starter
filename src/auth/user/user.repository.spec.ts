@@ -1,9 +1,6 @@
 import { Test } from '@nestjs/testing';
 import { UserRepository } from './user.repository';
-import {
-  ConflictException,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { ConflictException, InternalServerErrorException } from '@nestjs/common';
 import { User } from './user.entity';
 import * as bcrypt from 'bcryptjs';
 
@@ -33,19 +30,17 @@ describe('UserRepository', () => {
 
     it('should successfully sign up user', () => {
       save.mockResolvedValue(undefined);
-      expect(userRepository.signUp(mockCredentialsDto)).resolves.not.toThrow();
+      void expect(userRepository.signUp(mockCredentialsDto)).resolves.not.toThrow();
     });
 
     it('should throw a conflict exception as username already exists', () => {
       save.mockRejectedValue({ code: '23505' });
-      expect(userRepository.signUp(mockCredentialsDto)).rejects.toThrow(
-        ConflictException,
-      );
+      void expect(userRepository.signUp(mockCredentialsDto)).rejects.toThrow(ConflictException);
     });
 
     it('should throw an internal server exception in other cases', () => {
       save.mockRejectedValue({ code: '1111' }); // unhandled error code
-      expect(userRepository.signUp(mockCredentialsDto)).rejects.toThrow(
+      void expect(userRepository.signUp(mockCredentialsDto)).rejects.toThrow(
         InternalServerErrorException,
       );
     });
@@ -66,17 +61,13 @@ describe('UserRepository', () => {
       userRepository.findOne.mockResolvedValue(user);
       user.validatePassword.mockResolvedValue(true);
 
-      const result = await userRepository.validateUserPassword(
-        mockCredentialsDto,
-      );
+      const result = await userRepository.validateUserPassword(mockCredentialsDto);
       expect(result).toEqual('TestUsername');
     });
 
     it('should return null when user cannot be found', async () => {
       userRepository.findOne.mockResolvedValue(null);
-      const result = await userRepository.validateUserPassword(
-        mockCredentialsDto,
-      );
+      const result = await userRepository.validateUserPassword(mockCredentialsDto);
       expect(user.validatePassword).not.toHaveBeenCalled();
       expect(result).toBeNull();
     });
@@ -84,9 +75,7 @@ describe('UserRepository', () => {
     it('should return null when password is invalid', async () => {
       userRepository.findOne.mockResolvedValue(user);
       user.validatePassword.mockResolvedValue(false);
-      const result = await userRepository.validateUserPassword(
-        mockCredentialsDto,
-      );
+      const result = await userRepository.validateUserPassword(mockCredentialsDto);
       expect(result).toBeNull();
     });
   });
@@ -96,10 +85,7 @@ describe('UserRepository', () => {
       // bcrypt.hash as any because normally is a read-only property
       (bcrypt.hash as any) = jest.fn().mockResolvedValue('testHash');
       expect(bcrypt.hash).not.toHaveBeenCalled();
-      const result = await userRepository.hashPassword(
-        'testPassword',
-        'testSalt',
-      );
+      const result = await userRepository.hashPassword('testPassword', 'testSalt');
       expect(bcrypt.hash).toHaveBeenCalled();
       expect(result).toEqual('testHash');
     });

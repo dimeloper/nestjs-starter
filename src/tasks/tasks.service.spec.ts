@@ -24,14 +24,11 @@ describe('TaskService', () => {
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
-      providers: [
-        TasksService,
-        { provide: TaskRepository, useFactory: mockTaskRepository },
-      ],
+      providers: [TasksService, { provide: TaskRepository, useFactory: mockTaskRepository }],
     }).compile();
 
-    tasksService = await module.get<TasksService>(TasksService);
-    taskRepository = await module.get<TaskRepository>(TaskRepository);
+    tasksService = module.get<TasksService>(TasksService);
+    taskRepository = module.get<TaskRepository>(TaskRepository);
   });
 
   describe('getTasks', () => {
@@ -65,9 +62,7 @@ describe('TaskService', () => {
 
     it('should throw an exception when task not found', () => {
       taskRepository.findOne.mockResolvedValue(null);
-      expect(tasksService.getTaskById(1, mockUser)).rejects.toThrow(
-        NotFoundException,
-      );
+      void expect(tasksService.getTaskById(1, mockUser)).rejects.toThrow(NotFoundException);
     });
   });
 
@@ -97,11 +92,9 @@ describe('TaskService', () => {
       });
     });
 
-    it('should throw an exception when task not found', async () => {
+    it('should throw an exception when task not found', () => {
       taskRepository.delete.mockResolvedValue({ affected: 0 });
-      expect(tasksService.deleteTask(1, mockUser)).rejects.toThrow(
-        NotFoundException,
-      );
+      void expect(tasksService.deleteTask(1, mockUser)).rejects.toThrow(NotFoundException);
     });
   });
 
@@ -115,11 +108,7 @@ describe('TaskService', () => {
 
       expect(tasksService.getTaskById).not.toHaveBeenCalled();
       expect(save).not.toHaveBeenCalled();
-      const result = await tasksService.updateTaskStatus(
-        1,
-        TaskStatus.DONE,
-        mockUser,
-      );
+      const result = await tasksService.updateTaskStatus(1, TaskStatus.DONE, mockUser);
 
       expect(tasksService.getTaskById).toHaveBeenCalled();
       expect(save).toHaveBeenCalled();

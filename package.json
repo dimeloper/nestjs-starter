@@ -1,6 +1,6 @@
 {
   "name": "nest-starter",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "",
   "author": "",
   "license": "MIT",
@@ -12,7 +12,7 @@
     "start:dev": "NODE_ENV=development nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "NODE_ENV=production node dist/main",
-    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "NODE_ENV=development jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
@@ -20,42 +20,52 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@nestjs/common": "^6.7.2",
-    "@nestjs/core": "^6.7.2",
-    "@nestjs/jwt": "^6.1.1",
-    "@nestjs/passport": "^6.1.0",
-    "@nestjs/platform-express": "^6.7.2",
-    "@nestjs/typeorm": "^6.2.0",
+    "@nestjs/common": "^7.6.18",
+    "@nestjs/core": "^7.6.18",
+    "@nestjs/jwt": "^7.2.0",
+    "@nestjs/passport": "^7.1.6",
+    "@nestjs/platform-express": "^7.6.18",
+    "@nestjs/typeorm": "^7.1.5",
+    "@types/express": "^4.17.13",
+    "@types/node": "^12.20.15",
     "bcryptjs": "^2.4.3",
-    "class-transformer": "^0.2.3",
-    "class-validator": "^0.10.1",
-    "config": "^3.2.3",
-    "passport": "^0.4.0",
+    "class-transformer": "^0.4.0",
+    "class-validator": "^0.13.1",
+    "config": "^3.3.6",
+    "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-    "pg": "^7.12.1",
+    "pg": "^8.6.0",
     "reflect-metadata": "^0.1.13",
-    "rimraf": "^3.0.0",
-    "rxjs": "^6.5.3",
-    "typeorm": "^0.2.19",
-    "@types/express": "^4.17.1",
-    "@types/node": "^12.7.5",
-    "ts-node": "^8.4.1",
-    "typescript": "^3.6.3"
+    "rimraf": "^3.0.2",
+    "rxjs": "^6.6.7",
+    "ts-node": "^8.10.2",
+    "typeorm": "^0.2.34",
+    "typescript": "^4.3.5"
   },
   "devDependencies": {
-    "@nestjs/cli": "^6.9.0",
-    "@nestjs/schematics": "^6.7.0",
-    "@nestjs/testing": "^6.7.1",
+    "@nestjs/cli": "^7.6.0",
+    "@nestjs/schematics": "^7.3.1",
+    "@nestjs/testing": "^7.6.18",
     "@types/bcryptjs": "^2.4.2",
-    "@types/jest": "^24.0.18",
-    "@types/supertest": "^2.0.8",
+    "@types/jest": "^24.9.1",
+    "@types/supertest": "^2.0.11",
+    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/eslint-plugin-tslint": "^4.28.2",
+    "@typescript-eslint/parser": "^4.28.2",
+    "eslint": "^7.30.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsdoc": "^35.4.1",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-prettier": "^3.4.0",
+    "husky": "4.2.5",
     "jest": "^24.9.0",
-    "prettier": "^1.18.2",
+    "lint-staged": "^11.0.0",
+    "prettier": "^1.19.1",
     "supertest": "^4.0.2",
-    "ts-jest": "^24.1.0",
-    "ts-loader": "^6.1.1",
-    "tsconfig-paths": "^3.9.0",
-    "tslint": "^5.20.0"
+    "ts-jest": "^24.3.0",
+    "ts-loader": "^6.2.2",
+    "tsconfig-paths": "^3.10.1"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -70,5 +80,19 @@
     },
     "coverageDirectory": "./coverage",
     "testEnvironment": "node"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.(ts|html|css)": [
+      "prettier --write"
+    ],
+    ".ts": [
+      "yarn lint:fix",
+      "yarn lint"
+    ]
   }
 }
