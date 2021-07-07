@@ -32,37 +32,24 @@ export class TasksController {
 
   @Get()
   @UsePipes(ValidationPipe)
-  getTasks(
-    @Query() filterDto: GetTasksFilterDto,
-    @GetUser() user: User,
-  ): Promise<Task[]> {
+  getTasks(@Query() filterDto: GetTasksFilterDto, @GetUser() user: User): Promise<Task[]> {
     this.logger.verbose(
-      `User ${
-        user.username
-      } retrieving all tasks, with filters ${JSON.stringify(filterDto)}`,
+      `User ${user.username} retrieving all tasks, with filters ${JSON.stringify(filterDto)}`,
     );
 
     return this.taskService.getTasks(filterDto, user);
   }
 
   @Get('/:id')
-  getTaskById(
-    @Param('id', ParseIntPipe) id: number,
-    @GetUser() user: User,
-  ): Promise<Task> {
+  getTaskById(@Param('id', ParseIntPipe) id: number, @GetUser() user: User): Promise<Task> {
     return this.taskService.getTaskById(id, user);
   }
 
   @Post()
   @UsePipes(ValidationPipe)
-  createTask(
-    @Body() createTaskDto: CreateTaskDto,
-    @GetUser() user: User,
-  ): Promise<Task> {
+  createTask(@Body() createTaskDto: CreateTaskDto, @GetUser() user: User): Promise<Task> {
     this.logger.verbose(
-      `User ${user.username} created a new task with data: ${JSON.stringify(
-        createTaskDto,
-      )}.`,
+      `User ${user.username} created a new task with data: ${JSON.stringify(createTaskDto)}.`,
     );
     return this.taskService.createTask(createTaskDto, user);
   }
