@@ -3,7 +3,7 @@ import { Logger } from '@nestjs/common';
 import { AppModule } from './app.module';
 import * as config from 'config';
 
-async function bootstrap() {
+const bootstrap = async (): Promise<void> => {
   const logger = new Logger('bootstrap');
 
   const app = await NestFactory.create(AppModule);
@@ -11,7 +11,7 @@ async function bootstrap() {
 
   if (process.env.NODE_ENV === 'development') {
     app.enableCors();
-    logger.log(`DEV MODE - Accepting requests from everywhere :D`);
+    logger.log('DEV MODE - Accepting requests from everywhere :D');
   } else {
     app.enableCors({ origin: serverConfig.origin });
     logger.log(`PROD MODE - Accepting requests from origin ${serverConfig.origin}`);
@@ -20,5 +20,5 @@ async function bootstrap() {
   const port = process.env.PORT || serverConfig.port;
   await app.listen(port);
   logger.log(`Application listening on port: ${port}`);
-}
-bootstrap();
+};
+void bootstrap();

@@ -30,17 +30,17 @@ describe('UserRepository', () => {
 
     it('should successfully sign up user', () => {
       save.mockResolvedValue(undefined);
-      expect(userRepository.signUp(mockCredentialsDto)).resolves.not.toThrow();
+      void expect(userRepository.signUp(mockCredentialsDto)).resolves.not.toThrow();
     });
 
     it('should throw a conflict exception as username already exists', () => {
       save.mockRejectedValue({ code: '23505' });
-      expect(userRepository.signUp(mockCredentialsDto)).rejects.toThrow(ConflictException);
+      void expect(userRepository.signUp(mockCredentialsDto)).rejects.toThrow(ConflictException);
     });
 
     it('should throw an internal server exception in other cases', () => {
       save.mockRejectedValue({ code: '1111' }); // unhandled error code
-      expect(userRepository.signUp(mockCredentialsDto)).rejects.toThrow(
+      void expect(userRepository.signUp(mockCredentialsDto)).rejects.toThrow(
         InternalServerErrorException,
       );
     });
