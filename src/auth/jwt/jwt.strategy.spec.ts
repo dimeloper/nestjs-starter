@@ -14,10 +14,7 @@ describe('JwtStrategy', () => {
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
-      providers: [
-        JwtStrategy,
-        { provide: UserRepository, useFactory: mockUserRepository },
-      ],
+      providers: [JwtStrategy, { provide: UserRepository, useFactory: mockUserRepository }],
     }).compile();
 
     jwtStrategy = module.get<JwtStrategy>(JwtStrategy);
@@ -39,9 +36,7 @@ describe('JwtStrategy', () => {
 
     it('should throw an unauthorized exception when user is not found', () => {
       userRepository.findOne.mockResolvedValue(null);
-      expect(jwtStrategy.validate({ username: 'TestUser' })).rejects.toThrow(
-        UnauthorizedException,
-      );
+      expect(jwtStrategy.validate({ username: 'TestUser' })).rejects.toThrow(UnauthorizedException);
     });
   });
 });
