@@ -1,0 +1,37 @@
+name: CI - Lint and Test
+
+on:
+  pull_request:
+    branches:
+      - master
+      
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Check out the repository code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Set up Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 22
+
+    # Install pnpm
+    - name: Install pnpm
+      run: npm install -g pnpm
+
+    # Install dependencies
+    - name: Install dependencies
+      run: pnpm install
+
+    # Run linter
+    - name: Run lint
+      run: pnpm run lint
+
+    # Run tests
+    - name: Run tests
+      run: pnpm test
