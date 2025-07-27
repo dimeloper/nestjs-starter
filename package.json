@@ -22,11 +22,11 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@nestjs/common": "^11.1.0",
-    "@nestjs/core": "^11.1.0",
+    "@nestjs/common": "^11.1.5",
+    "@nestjs/core": "^11.1.5",
     "@nestjs/jwt": "^11.0.0",
     "@nestjs/passport": "^11.0.5",
-    "@nestjs/platform-express": "^11.1.0",
+    "@nestjs/platform-express": "^11.1.5",
     "@nestjs/typeorm": "^11.0.0",
     "@types/express": "^4.17.13",
     "@types/node": "^12.20.15",
